@@ -17,19 +17,25 @@ This project contains tools for managing Microsoft 365 environments using Micros
 
 ### Installation
 
-1. Clone the repository:
+1. Change directory to the $HOME
+
+    ```shell
+    cd $HOME
+    ```
+
+2. Clone the repository:
 
     ```shell
     git clone https://github.com/yourusername/M365AdminTools.git
     ```
 
-2. Navigate to the project directory:
+3. Navigate to the project directory:
 
     ```shell
     cd M365AdminTools
     ```
 
-3. Run the setup script to install necessary modules:
+4. RAdd $HOME\M365AdminTools\scripts to the $PATH:
 
     ```shell
     ./setup.ps1

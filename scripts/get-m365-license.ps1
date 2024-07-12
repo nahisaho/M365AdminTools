@@ -1,44 +1,47 @@
-<#
-.SYNOPSIS
-This script connects to Microsoft Graph, retrieves Microsoft 365 license information, and displays it.
+<# 
+.SYNOPSIS 
+This script connects to Microsoft Graph, retrieves Microsoft 365 license information, and displays it. 
 
-.DESCRIPTION
-The script reads credentials from a JSON file (credentials.json), connects to Microsoft Graph using the ClientSecretCredential,
+.DESCRIPTION 
+The script reads credentials from a JSON file (credentials.json), connects to Microsoft Graph using the ClientSecretCredential, 
 and retrieves Microsoft 365 license information. It then displays the licenses in a formatted table. If the credentials file 
-does not exist or if there is a failure in connecting to Microsoft Graph, appropriate error messages are displayed.
+does not exist or if there is a failure in connecting to Microsoft Graph, appropriate error messages are displayed. 
 
-Before running this script, you need to register an application in Entra ID and create the tenantId, clientId, and clientSecret. You must also add the Organization.Read.All API permissions.
+Before running this script, you need to register an application in Entra ID and create the tenantId, clientId, and clientSecret. You must also add the Organization.Read.All API permissions. 
 
-.PARAMETER None
-This script does not take any parameters.
+.PARAMETER None 
+This script does not take any parameters. 
 
-.EXAMPLE
-.\get-ms365-license.ps1
-This example runs the script, connects to Microsoft Graph, and displays the Microsoft 365 licenses.
+.EXAMPLE 
+.\get-ms365-license.ps1 
+This example runs the script, connects to Microsoft Graph, and displays the Microsoft 365 licenses. 
 
-.NOTES
-This script requires the Microsoft.Graph module. You can install it using the following command:
-Install-Module -Name Microsoft.Graph -Scope CurrentUser
+.NOTES 
+This script requires the Microsoft.Graph module. You can install it using the following command: 
+Install-Module -Name Microsoft.Graph -Scope CurrentUser 
 
-The credentials.json file should be in the same directory as the script and have the following structure:
-{
-    "tenantId": "your-tenant-id",
-    "clientId": "your-client-id",
-    "clientSecret": "your-client-secret"
-}
+The credentials.json file should be in the same directory as the script and have the following structure: 
+{ 
+    "tenantId": "your-tenant-id", 
+    "clientId": "your-client-id", 
+    "clientSecret": "your-client-secret" 
+} 
 
-.AUTHOR
-Hisaho Nakata <nahisaho@microsoft.com>
+.AUTHOR 
+Hisaho Nakata <nahisaho@microsoft.com> 
 
-.VERSION
-1.0
+.VERSION 
+1.0 
 
-.DATE
-2024-07-08
-#>
+.DATE 
+2024-07-08 
+#> 
+
+# Get the script directory
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 # Set the path to the credentials file
-$credentialsPath = ".\credentials.json"
+$credentialsPath = Join-Path -Path $scriptDir -ChildPath "credentials.json"
 
 # Check if the credentials file exists
 if (-Not (Test-Path -Path $credentialsPath)) {

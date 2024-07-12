@@ -1,16 +1,24 @@
-# setup.ps1
+# カレントディレクトリを取得
+$currentDir = Get-Location
 
-# Get the directory of the current script
-$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+# scripts ディレクトリのパスを作成
+$scriptsDir = Join-Path -Path $currentDir -ChildPath "scripts"
 
-# Add the scripts directory to PATH
-$path = [System.Environment]::GetEnvironmentVariable("PATH", "User")
-if ($path -notcontains "$scriptDir\scripts") {
-    [System.Environment]::SetEnvironmentVariable("PATH", "$path;$scriptDir\scripts", "User")
-    Write-Host "Added $scriptDir\scripts to PATH"
+# 現在のPATHを取得
+$currentPath = [System.Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::User)
+
+# scripts ディレクトリがPATHに既に含まれていない場合に追加
+if ($currentPath -notlike "*$scriptsDir*") {
+    # 新しいPATHを作成
+    $newPath = "$currentPath;$scriptsDir"
+    
+    # ユーザーの環境変数PATHを更新
+    [System.Environment]::SetEnvironmentVariable("PATH", $newPath, [System.EnvironmentVariableTarget]::User)
+
+    # 現在のセッションに反映させる
+    $env:PATH = $newPath
+
+    Write-Output "Added '$scriptsDir' to PATH."
 } else {
-    Write-Host "$scriptDir\scripts is already in PATH"
+    Write-Output "'$scriptsDir' is already in PATH."
 }
-
-# Restart PowerShell session to reflect the environment variable change
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location -Path $scriptDir"

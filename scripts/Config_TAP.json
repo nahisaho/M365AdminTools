@@ -1,0 +1,6 @@
+{
+    "temporaryAccessPassAuthenticationMethod": {
+        "lifetimeInMinutes": 43200,
+        "isUsableOnce": $false
+    }
+}

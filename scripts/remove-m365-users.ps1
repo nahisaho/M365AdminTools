@@ -53,8 +53,11 @@ if ($PSVersionTable.PSVersion.Major -lt 7 -or ($PSVersionTable.PSVersion.Major -
     exit 1
 }
 
+# Get the script directory
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+
 # Set the path to the credentials file
-$credentialsPath = ".\credentials.json"
+$credentialsPath = Join-Path -Path $scriptDir -ChildPath "credentials.json"
 
 # Check if the credentials file exists
 if (-Not (Test-Path -Path $credentialsPath)) {

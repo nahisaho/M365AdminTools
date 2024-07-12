@@ -49,8 +49,11 @@ if ($PSVersionTable.PSVersion.Major -lt 7 -or ($PSVersionTable.PSVersion.Major -
     exit 1
 }
 
+# Get the script directory
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+
 # Set the path to the credentials file
-$credentialsPath = ".\credentials.json"
+$credentialsPath = Join-Path -Path $scriptDir -ChildPath "credentials.json"
 
 # Check if the credentials file exists
 if (-Not (Test-Path -Path $credentialsPath)) {
@@ -107,34 +110,32 @@ try {
 
     $userListFormatted = $userList | ForEach-Object {
         [PSCustomObject]@{
-            "User Name"                = $_.UserPrincipalName
-            "First Name"               = $_.GivenName
-            "Last Name"                = $_.Surname
-            "Display Name"             = $_.DisplayName
-            "Job Title"                = $_.JobTitle
-            "Department"               = $_.Department
-            "Office Number"            = $_.OfficeLocation
-            "Office Phone"             = ($_.BusinessPhones -join ", ")
-            "Mobile Phone"             = $_.MobilePhone
-            "Fax"                      = $_.FaxNumber
-            "Alternate email address"  = ($_.OtherMails -join ", ")
-            "Address"                  = $_.StreetAddress
-            "City"                     = $_.City
-            "State or Province"        = $_.State
-            "ZIP or Postal Code"       = $_.PostalCode
-            "Country or Region"        = $_.Country
+            "UserPrincipalName" = $_.UserPrincipalName
+            "Password"          = ""
+            "DisplayName"       = $_.DisplayName
+            "GivenName"         = $_.GivenName
+            "SurName"           = $_.Surname
+            "JobTitle"          = $_.JobTitle
+            "EmployeeId"        = $_.EmployeeId
+            "EmployeeType"      = $_.EmployeeType
+            "Department"        = $_.Department
+            "City"              = $_.City
+            "State"             = $_.State
+            "Country"           = $_.Country
+            "StreetAddress"     = $_.StreetAddress
+            "PostalCode"        = $_.PostalCode
         }
     }
 
     # Add the header to the temporary file
-    $header = "User Name,First Name,Last Name,Display Name,Job Title,Department,Office Number,Office Phone,Mobile Phone,Fax,Alternate email address,Address,City,State or Province,ZIP or Postal Code,Country or Region"
+    $header = "UserPrincipalName,Password,DisplayName,GivenName,SurName,JobTitle,EmployeeId,EmployeeType,Department,City,State,Country,StreetAddress,PostalCode"
     Add-Content -Path $tempFilePath -Value $header
 
     # Export the user list to the temporary file
     $userListFormatted | Export-Csv -Path $tempFilePath -NoTypeInformation -Append -Encoding UTF8
 
     # Read the temporary file and write it to the final output file with BOM
-    Get-Content -Path $tempFilePath -Encoding UTF8 | Out-File -Path $OutputFile -Encoding UTF8 -Force
+    Get-Content -Path $tempFilePath -Encoding UTF8 | Out-File -Path $OutputFile -Encoding UTF8BOM -Force
     Write-Host "User list exported to $OutputFile"
 } catch {
     Write-Host "Failed to retrieve or export user list: $_"

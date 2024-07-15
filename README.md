@@ -35,7 +35,7 @@ This project contains tools for managing Microsoft 365 environments using Micros
     cd M365AdminTools
     ```
 
-4. RAdd $HOME\M365AdminTools\scripts to the $PATH:
+4. Add $HOME\M365AdminTools\scripts to the $PATH:
 
     ```shell
     ./setup.ps1

@@ -103,21 +103,6 @@ This project contains tools for managing Microsoft 365 environments using Micros
     ./create-tap.ps1 -Inputfile <Inputfile>  [-Outputfile <outputsile>]
     ```
 
-#### Export User Details
-
-- To export user details to a CSV file:
-
-    ```shell
-    ./scripts/export-users.ps1 -OutputFile "users.csv"
-    ```
-
-#### Cleanup Deleted User Objects
-
-- To clean up deleted user objects:
-
-    ```shell
-    ./scripts/cleanup-deleted-users.ps1
-    ```
 
 ## Contributing
 

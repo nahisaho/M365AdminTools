@@ -108,7 +108,7 @@ try {
 # Generate default output file name if not provided
 if (-Not $OutputFile) {
     $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
-    $OutputFile = "AddedUsersList_$timestamp.csv"
+    $OutputFile = "AddedUUsersList_$timestamp.csv"
 }
 
 # Create a temporary file path in the current directory

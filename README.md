@@ -26,7 +26,7 @@ This project contains tools for managing Microsoft 365 environments using Micros
 2. Clone the repository:
 
     ```shell
-    git clone https://github.com/yourusername/M365AdminTools.git
+    git clone https://github.com/yourusername/M365AdminTools
     ```
 
 3. Navigate to the project directory:
